@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Framebuffer.h"
 
 bool Renderer::Initalize()
 {
@@ -11,13 +12,13 @@ bool Renderer::Initalize()
     return true;
 }
 
-bool Renderer::CreateWindow()
+bool Renderer::CreateWindow(std::string name, int width, int height)
 {
     // create window
     // returns pointer to window if successful or nullptr if failed
-    m_window = SDL_CreateWindow("Game Engine",
+    m_window = SDL_CreateWindow(name.c_str(),
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        800, 600,
+        width, height,
         SDL_WINDOW_SHOWN);
     if (m_window == nullptr)
     {
@@ -32,6 +33,7 @@ bool Renderer::CreateWindow()
 void Renderer::RenderClear()
 {
     SDL_RenderClear(m_renderer);
+    SetRenderColor(0, 0, 0, 0);
 }
 
 void Renderer::RenderPresent()
@@ -42,4 +44,14 @@ void Renderer::RenderPresent()
 void Renderer::SetRenderColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
     SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
+}
+
+void Renderer::CopyFrameBuffer(const Framebuffer& buffer)
+{
+    SDL_RenderCopy(m_renderer, buffer.m_texture, NULL, NULL);
+}
+
+void Renderer::operator=(const Framebuffer& buffer)
+{
+    SDL_RenderCopy(m_renderer, buffer.m_texture, NULL, NULL);
 }
