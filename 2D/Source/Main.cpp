@@ -44,13 +44,15 @@ int main(int argc, char* argv[])
             
             
             
+            
             //framebuffer.DrawLine(x, y, x2, y2, color_t{255,255,255 });
           //  framebuffer.DrawTriangle(100, 100, 200, 200, 300, 300, color_t{ 255,255,255 });
             framebuffer.DrawPoint(x, y, color_t{ 255,255,255 });
         }
-       // framebuffer.DrawTriangle(100, 100, 200, 200, 100, 100, color_t{ 255,255,255 });
-
-       framebuffer.DrawRect(10, 10, 100, 100, color_t{ 255,255,255,255 });
+        framebuffer.DrawTriangle(50, 100, 100, 150, 200, 50, color_t{ 255,255,255 });
+        int xc = 50, xy = 50, r = 40;
+       //framebuffer.DrawRect(10, 10, 100, 100, color_t{ 255,255,255,255 });
+       framebuffer.DrawCircle(xc, xy, r, color_t{ 255,255,255,255 });
 
         framebuffer.Update();
         //renderer = framebuffer;

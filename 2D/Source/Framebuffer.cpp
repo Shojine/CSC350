@@ -106,10 +106,53 @@ void Framebuffer::DrawLineSlope(int x1, int y1, int x2, int y2, const color_t& c
 void Framebuffer::DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, const color_t& color)
 {
 
-	DrawLine(x1, y1, y1, y2, color);
+	DrawLine(x1, y1, x2, y2, color);
 	DrawLine(x2, y2, x3, y3, color);
 	DrawLine(x3, y3, x1, y1, color);
 }
+
+void Framebuffer::DrawCircle(int x, int y, int r, const color_t& color)
+{
+	int dx = 0, dy = r;
+	int d = 3 - 2 * r;
+	DrawPoint(x + dx, y + dy, color);
+	DrawPoint(x - dx, y + dy, color);
+	DrawPoint(x + dx, y - dy, color);
+	DrawPoint(x - dx, y - dy, color);
+	DrawPoint(x + dy, y + dx, color);
+	DrawPoint(x - dy, y + dx, color);
+	DrawPoint(x + dy, y - dx, color);
+	DrawPoint(x - dy, y - dx, color);
+	while (dy >= dx) {
+
+		// check for decision parameter
+		// and correspondingly 
+		// update d, y
+		if (d > 0) {
+			dy--;
+			d = d + 4 * (dx - dy) + 10;
+		}
+		else
+			d = d + 4 * dx + 6;
+
+		// Increment x after updating decision parameter
+		dx++;
+
+		// Draw the circle using the new coordinates
+		DrawPoint(x + dx, y + dy, color);
+		DrawPoint(x - dx, y + dy, color);
+		DrawPoint(x + dx, y - dy, color);
+		DrawPoint(x - dx, y - dy, color);
+		DrawPoint(x + dy, y + dx, color);
+		DrawPoint(x - dy, y + dx, color);
+		DrawPoint(x + dy, y - dx, color);
+		DrawPoint(x - dy, y - dx, color);
+		
+		
+	}
+}
+
+
 
 
 void Framebuffer::DrawLine(int x1, int y1, int x2, int y2, const color_t& color)
