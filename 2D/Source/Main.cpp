@@ -52,9 +52,10 @@ int main(int argc, char* argv[])
             
           //  framebuffer.DrawTriangle(100, 100, 200, 200, 300, 300, color_t{ 255,255,255 });
             framebuffer.DrawPoint(x, y, color_t{ 255,255,255 });
-        framebuffer.DrawImage(x, y, image);
+       framebuffer.DrawImage(x, y, image);
         }
 
+        
         int mx, my;
         SDL_GetMouseState(&mx, &my);
         /*int ticks = SDL_GetTicks() * 0.001f;

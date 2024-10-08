@@ -239,68 +239,6 @@ void Framebuffer::DrawImage(int x, int y, const Image& image)
 			m_buffer[sx + sy * m_width] = color;
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//// check if off-screen
-	//if (x >= m_width || x + image.m_width < 0 || y + image.m_height < 0 || y >= m_height) return;
-
-	//// iterate through image y
-	//for (int iy = 0; iy < image.m_height; iy++)
-	//{
-	//	// set screen y 
-	//	int sy = y + image.m_height;
-	//	// check if off-screen, don't draw if off-screen
-	//	if (y - image.m_height == 0) return;
-
-	//	// iterate through image x
-	//	for (int ix = 0; ix < image.m_width; ix++)
-	//	{
-	//		// set screen x
-	//		int sx = x + image.m_width;
-	//		// check if off-screen, don't draw if off-screen
-	//		if (sx) return;
-
-	//		// get image pixel color
-	//		color_t color = image.m_buffer[image.m_width + image.m_height * m_height];
-	//		// check alpha, if 0 don't draw
-	//		if (color.a == 0) break ;
-	//		// set buffer to color
-	//		m_buffer[x + y * m_height] = color;
-	//	}
-	//}
 }
 
 void Framebuffer::DrawLine(int x1, int y1, int x2, int y2, const color_t& color)
