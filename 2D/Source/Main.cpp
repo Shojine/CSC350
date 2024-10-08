@@ -1,8 +1,10 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
 #include "MathUtils.h"
+#include "Image.h"
 #include <iostream>
 #include <SDL.h>
+
 
 
 
@@ -13,6 +15,8 @@ int main(int argc, char* argv[])
     renderer->Initalize();
     renderer->CreateWindow("Game Engine", 800, 600);
     Framebuffer framebuffer(*renderer, 800, 600);
+    Image image;
+    image.Load("Halloween.png");
 
     bool quit = false;
     while (!quit)
@@ -48,15 +52,16 @@ int main(int argc, char* argv[])
             
           //  framebuffer.DrawTriangle(100, 100, 200, 200, 300, 300, color_t{ 255,255,255 });
             framebuffer.DrawPoint(x, y, color_t{ 255,255,255 });
+        framebuffer.DrawImage(x, y, image);
         }
 
         int mx, my;
         SDL_GetMouseState(&mx, &my);
-        int ticks = SDL_GetTicks() * 0.001f;
+        /*int ticks = SDL_GetTicks() * 0.001f;
         float t = std::abs(std::sin(ticks));
         int x, y;
         CubicPoint(300, 400, 300, 100, mx, my, 600, 400, t, x, y);
-        framebuffer.DrawRect(x - 20 , y - 20, 40, 40, color_t{255,255,255,255});
+        framebuffer.DrawRect(x - 20 , y - 20, 40, 40, color_t{255,255,255,255})*/;
         
 
 
@@ -66,8 +71,8 @@ int main(int argc, char* argv[])
        //framebuffer.DrawRect(10, 10, 100, 100, color_t{ 255,255,255,255 });
        framebuffer.DrawCircle(xc, xy, r, color_t{ 255,255,255,255 });
        framebuffer.DrawLinearCurve(100, 100, 200, 200, color_t{ 230,20,200,255 });
-       framebuffer.DrawQuadraticCurve(100, 200, 200, 100, mx , my, color_t{ 230,20,200,255 });
-       framebuffer.DrawCubicCurve(100, 200,100, 100, mx, my, x, y, color_t{ 230,20,200,255 });
+       /*framebuffer.DrawQuadraticCurve(100, 200, 200, 100, mx , my, color_t{ 230,20,200,255 });
+       framebuffer.DrawCubicCurve(100, 200,100, 100, mx, my, x, y, color_t{ 230,20,200,255 });*/
        framebuffer.Update();
         //renderer = framebuffer;
         renderer->CopyFrameBuffer(framebuffer);
