@@ -232,7 +232,7 @@ void Framebuffer::DrawImage(int x, int y, const Image& image)
 			if (sx < 0 || sx >= m_width) continue;
 
 			// get image pixel color
-			color_t color = image.m_buffer[ix + iy * image.m_width];
+			color_t color = image.m_buffer[ix + (iy * image.m_width)];
 			// check alpha, if 0 don't draw
 			if (color.a == 0) continue;
 			// set buffer to color

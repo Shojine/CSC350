@@ -1,7 +1,7 @@
 #pragma once
 
 template <typename T>
-	inline T Lerp(T a, T b, float t) 
+	inline T Lerp(const T& a, const T& b, float t) 
 	{ 
 		return static_cast<T>(a + ((b - a) * t));
 	}
@@ -31,4 +31,9 @@ template <typename T>
 
 		x = (int)(a * x1 + b * x2 + c * x3  + d * x4);
 		y = (int)(a * y1 + b * y2 + c * y3 + d * y4);
+	}
+	template<typename T>
+	inline T Clamp(const T& value, const T& max, const T& min)
+	{
+		return (value < min) ? min : (value > max) ? max : value;
 	}

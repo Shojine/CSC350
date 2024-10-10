@@ -25,7 +25,7 @@ public:
 
 	void DrawImage(int x, int y, const class Image& image);
 
-
+	std::vector<color_t>& GetBuffer() { return m_buffer; }
 
 
 
