@@ -43,9 +43,9 @@ namespace PostProcess
 		std::for_each(buffer.begin(), buffer.end(), [ro,go,bo](auto& c)
 			{
 
-				c.r = static_cast<uint8_t>(Clamp((c.r - (go + bo)) + ro, 255, 0));
-				c.g = static_cast<uint8_t>(Clamp((c.g - (ro + bo)) + go, 255, 0));
-				c.b = static_cast<uint8_t>(Clamp((c.b - (ro + go)) + bo, 255, 0));
+				c.r = static_cast<uint8_t>(Clamp((c.r + ro), 255, 0));
+				c.g = static_cast<uint8_t>(Clamp((c.g + go), 255, 0));
+				c.b = static_cast<uint8_t>(Clamp((c.b + bo), 255, 0));
 			});
 		
 	}
@@ -55,9 +55,10 @@ namespace PostProcess
 			{
 				int offset = (rand() % ((noise * 2) + 1)) - noise;
 				
+				
 				c.r = c.r + static_cast<uint8_t>(Clamp(c.r + offset, 255, 0));
 				c.g = c.g + static_cast<uint8_t>(Clamp(c.g + offset, 255, 0));
-				c.b = c.b + static_cast<uint8_t>(Clamp(c.b * offset, 255, 0));
+				c.b = c.b + static_cast<uint8_t>(Clamp(c.b + offset, 255, 0));
 			});
 	}
 	void BoxBlur(std::vector<color_t>& buffer, int width, int height)
@@ -220,5 +221,31 @@ namespace PostProcess
 			color.g = c;
 			color.b = c;
 		}
+	}
+	void Threshold(std::vector<color_t>& buffer, uint8_t threshold)
+	{
+		std::for_each(buffer.begin(), buffer.end(), [threshold](auto& c)
+			{
+				if (c.r > threshold && c.g > threshold && c.b > threshold)
+				{
+					c.r = c.g = c.b = 255;
+				}
+				else
+				{
+					c.r = c.g = c.b = 0;
+				}
+			
+			});
+	}
+	void Posterize(std::vector<color_t>& buffer, uint8_t levels)
+	{
+		uint8_t colorLevel = static_cast < uint8_t>(255 / levels);
+		std::for_each(buffer.begin(), buffer.end(), [colorLevel](auto& c)
+			{
+
+				c.r = (c.r / colorLevel) * colorLevel;
+				c.g = (c.g / colorLevel) * colorLevel;
+				c.b = (c.b / colorLevel) * colorLevel;
+			});
 	}
 }

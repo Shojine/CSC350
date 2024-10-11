@@ -67,19 +67,21 @@ int main(int argc, char* argv[])
         framebuffer.DrawRect(x - 20 , y - 20, 40, 40, color_t{255,255,255,255});*/
   
        
-       /*PostProcess::Invert(framebuffer.m_buffer);
-       PostProcess::Monochrome(framebuffer.m_buffer);*/
-       //PostProcess::Brightness(framebuffer.m_buffer, -80);
-        //PostProcess::ColorBalance(framebuffer.m_buffer, 90, 0, 160);
-        //PostProcess::Noise(framebuffer.m_buffer, 40);
+       //PostProcess::Invert(framebuffer.m_buffer);
+       //PostProcess::Monochrome(framebuffer.m_buffer);
+       //PostProcess::Brightness(framebuffer.m_buffer, 90);
+        //PostProcess::ColorBalance(framebuffer.m_buffer, 150, -50, -50);
+        //PostProcess::Noise(framebuffer.m_buffer, 90);
         /*for (int i = 0; i < 10; i++)
         {
         PostProcess::BoxBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
         }*/
         //PostProcess::GauseanBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
         //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
-        PostProcess::Monochrome(framebuffer.m_buffer);
-        PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 10);
+        //PostProcess::Monochrome(framebuffer.m_buffer);
+        //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 10);
+       // PostProcess::Threshold(framebuffer.m_buffer,100);
+        PostProcess::Posterize(framebuffer.m_buffer, 6);
         
         framebuffer.Update();
         //renderer = framebuffer;

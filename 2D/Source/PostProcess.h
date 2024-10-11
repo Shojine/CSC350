@@ -14,6 +14,8 @@ namespace PostProcess
 	void GauseanBlur(std::vector<color_t>& buffer, int width, int height);
 	void Sharpen(std::vector<color_t>& buffer, int width, int height);
 	void Edge(std::vector<color_t>& buffer, int width, int height, int threshold);
+	void Threshold(std::vector<color_t>& buffer, uint8_t threshold);
+	void Posterize(std::vector<color_t>& buffer, uint8_t levels);
 	
 	
 
