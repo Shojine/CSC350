@@ -16,6 +16,7 @@ namespace PostProcess
 	void Edge(std::vector<color_t>& buffer, int width, int height, int threshold);
 	void Threshold(std::vector<color_t>& buffer, uint8_t threshold);
 	void Posterize(std::vector<color_t>& buffer, uint8_t levels);
+	void Alpha(std::vector<color_t>& buffer, uint8_t alpha);
 	
 	
 

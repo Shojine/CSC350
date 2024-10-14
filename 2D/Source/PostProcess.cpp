@@ -205,9 +205,9 @@ namespace PostProcess
 			{
 				for (int ix = 0; ix < 3; ix++)
 				{
-					color_t pixel = source[(x + ix - 1) + (y + iy - 1) * width];
-					h += pixel.r * hk[iy][ix];
-					v += pixel.r * vk[iy][ix];
+					color_t pixel = source[(x + ix) + (y + iy ) * width];
+					h += pixel.r * hk[1 + iy][1 + ix];
+					v += pixel.r * vk[1 + iy][1 + ix];
 					
 				}
 			
@@ -246,6 +246,13 @@ namespace PostProcess
 				c.r = (c.r / colorLevel) * colorLevel;
 				c.g = (c.g / colorLevel) * colorLevel;
 				c.b = (c.b / colorLevel) * colorLevel;
+			});
+	}
+	void Alpha(std::vector<color_t>& buffer, uint8_t alpha)
+	{
+		std::for_each(buffer.begin(), buffer.end(), [alpha](color_t& c)
+			{
+				c.a = alpha;
 			});
 	}
 }
