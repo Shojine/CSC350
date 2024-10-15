@@ -59,3 +59,17 @@ color_t AdditiveBlend(const color_t& src, const color_t& dest)
 
 	return color;
 }
+
+color_t MultiplyBlend(const color_t& src, const color_t& dest)
+{
+	uint8_t alpha = src.a;
+	uint8_t inv_alpha = 255 - alpha;
+
+	color_t color;
+	color.r = std::min(src.r * dest.r, 255);
+	color.g = std::min(src.g * dest.g, 255);
+	color.b = std::min(src.b * dest.b, 255);
+	color.a = src.a;
+
+	return color;
+}

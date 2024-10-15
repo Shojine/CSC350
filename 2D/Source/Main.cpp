@@ -16,13 +16,12 @@ int main(int argc, char* argv[])
     renderer->Initalize();
     renderer->CreateWindow("Game Engine", 800, 600);
     Framebuffer framebuffer(*renderer, 800, 600);
-
     Image image;
     image.Load("Forest.jpg");
 
-    Image imageAlpha;
+    /*Image imageAlpha;
     imageAlpha.Load("colors.png");
-    PostProcess::Alpha(imageAlpha.m_buffer, 300);
+    PostProcess::Alpha(imageAlpha.m_buffer, 300);*/
 
     bool quit = false;
     while (!quit)
@@ -65,9 +64,9 @@ int main(int argc, char* argv[])
 
         SetBlendMode(BlendMode::Normal);
         framebuffer.DrawImage(50, 100, image);
-        SetBlendMode(BlendMode::Alpha);
+        /*SetBlendMode(BlendMode::Alpha);
         framebuffer.DrawImage(mx, my, imageAlpha);
-        
+        */
         
         /*int x, y;
         CubicPoint(300, 400, 300, 100, mx, my, 600, 400, t, x, y);
@@ -80,16 +79,18 @@ int main(int argc, char* argv[])
        //PostProcess::Brightness(framebuffer.m_buffer, 90);
         //PostProcess::ColorBalance(framebuffer.m_buffer, 150, -50, -50);
         //PostProcess::Noise(framebuffer.m_buffer, 90);
-        /*for (int i = 0; i < 10; i++)
+        /*for (int i = 0; i < 4; i++)
         {
         PostProcess::BoxBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
         }*/
-        //PostProcess::GauseanBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+       // PostProcess::GauseanBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+        
         //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
         //PostProcess::Monochrome(framebuffer.m_buffer);
-        //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 10);
+        //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 40);
        //PostProcess::Threshold(framebuffer.m_buffer,100);
         //PostProcess::Posterize(framebuffer.m_buffer, 6);
+        PostProcess::Emboss(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
 #pragma endregion
 
         
