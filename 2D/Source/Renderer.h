@@ -19,8 +19,13 @@ public:
 	void operator = (const class Framebuffer& buffer);
 	friend class Framebuffer;
 
+	int m_width;
+	int m_height;
+
 
 private:
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
+
+
 };

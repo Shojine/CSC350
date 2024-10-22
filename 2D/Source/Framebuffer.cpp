@@ -161,6 +161,87 @@ void Framebuffer::DrawCircle(int x, int y, int r, const color_t& color)
 	}
 }
 
+bool Framebuffer::ClipLine(int& x1, int& x2, int& y1, int& y2)
+{
+	int code1 = ComputeClipCode(x1, y1);
+	int code2 = ComputeClipCode(x2, y2);
+
+	bool accept = false;
+
+	while (true)
+	{
+		if ((code1 == 0) && (code2 == 0))
+		{
+			accept = true;
+			break;
+		}
+		else if (code1 & code2)
+		{
+			break;
+		}
+		else
+		{
+			int code_out;
+			int x = 0, y = 0;
+
+			if (code1 != 0)
+				code_out = code1;
+			else
+				code_out = code2;
+
+			if (code_out & TOP)
+			{
+				x = x1 + (x2 - x1) * (m_width - y1) / (y2 - y1);
+				y = m_height - 1;
+			}
+			else if (code_out & BOTTOM)
+			{
+				x = x1 + (x2 - x1) * (0 - y1) / (y2 - y1);
+				y = 0;
+			}
+			else if (code_out & RIGHT)
+			{
+				y = y1 + (y2 - y1) * (m_width - x1) / (x2 - x1);
+				x = m_width - 1;
+			}
+			else if (code_out & LEFT)
+			{
+				y = y1 + (y2 - y1) * (0 - x1) / (x2 - x1);
+				x = 0;
+			}
+
+			if (code_out == code1)
+			{
+				x1 = x;
+				y1 = y;
+				code1 = ComputeClipCode(x1, y1);
+			}
+			else
+			{
+				x2 = x;
+				y2 = y;
+				code2 = ComputeClipCode(x2, y2);
+			}
+
+		}
+	}
+
+
+
+	return accept;
+}
+
+int Framebuffer::ComputeClipCode(int x, int y)
+{
+	int code = INSIDE;
+
+	if (x < 0) code |= LEFT;
+	else if(x >= m_width) code |= RIGHT;
+	if (y < 0) code |= BOTTOM;
+	else if (y >= m_height) code |= TOP;
+	return code;
+}
+
 void Framebuffer::DrawLinearCurve(int x1, int y1, int x2, int y2, const color_t& color)
 {
 	float dt = 1 / 10.0f; // 0.1
@@ -251,6 +332,7 @@ void Framebuffer::DrawImage(int x, int y, const Image& image)
 
 void Framebuffer::DrawLine(int x1, int y1, int x2, int y2, const color_t& color)
 {
+	if (!ClipLine(x1, x2, y1, y2)) return;
 	int dx = x2 - x1;
 	int dy = y2 - y1; 
 
@@ -275,7 +357,14 @@ void Framebuffer::DrawLine(int x1, int y1, int x2, int y2, const color_t& color)
 
 	 for (int x = x1, y = y1; x <= x2; x++)
 	 {
-		 (steep) ? DrawPoint(y, x, color) : DrawPoint(x, y, color);
+		 if (steep)
+		 {
+			 DrawPointClip(y,x,color);
+		 }
+		 else
+		 {
+			 DrawPointClip(x, y, color);
+		 }
 		 error -= dy;
 
 		 if (error < 0)

@@ -27,6 +27,9 @@ bool Renderer::CreateWindow(std::string name, int width, int height)
         return false;
     }
     m_renderer = SDL_CreateRenderer(m_window, -1, 0);
+
+    m_width = width;
+    m_height = height;
     return true;
 }
 

@@ -20,6 +20,10 @@ public:
 	void DrawLineSlope(int x1, int y1, int x2, int y2, const color_t& color);
 	void DrawTriangle(int x1, int y1, int x2, int y2,int x3, int y3, const color_t& color);
 	void DrawCircle(int x, int y, int r, const color_t& color);
+	bool ClipLine(int& x1, int& x2, int& y1, int& y2);
+
+	int ComputeClipCode(int x, int y);
+
 	
 	void DrawLinearCurve(int x1, int y1, int x2, int y2, const color_t& color);
 	void DrawQuadraticCurve(int x1, int y1, int x2, int y2,int x3, int y3, const color_t& color);
@@ -35,6 +39,12 @@ public:
 	int m_width{ 0 };
 	int m_height{ 0 };
 	int m_pitch{ 0 };
+
+	const int INSIDE = 0; // 0000
+	const int LEFT = 1; // 0001
+	const int RIGHT = 2; // 0010
+	const int BOTTOM = 4; // 0100
+	const int TOP = 8; // 1000
 
 	SDL_Texture* m_texture{ nullptr };
 	std::vector<color_t> m_buffer;
