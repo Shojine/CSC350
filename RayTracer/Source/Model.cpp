@@ -17,7 +17,7 @@ void Model::Draw(Framebuffer& framebuffer, const glm::mat4& model, Camera& camer
 		vertex_t p3 = model * glm::vec4{ m_vertices[i + 2], 1 };
 
 		//convert point from world space to view space
-		p1 = camera.ModelToView(p1); 
+		p1 = camera.ModelToView(p1);
 		p2 = camera.ModelToView(p2);
 		p3 = camera.ModelToView(p3);
 
@@ -31,7 +31,7 @@ void Model::Draw(Framebuffer& framebuffer, const glm::mat4& model, Camera& camer
 			continue;
 		}
 
-		framebuffer.DrawTriangle(s1.x,s1.y,s2.x,s2.y,s3.x,s3.y, m_color);
+		framebuffer.DrawTriangle(s1.x, s1.y, s2.x, s2.y, s3.x, s3.y, m_color);
 	}
 }
 
@@ -39,7 +39,7 @@ bool Model::Load(const std::string& filename)
 {
 	std::ifstream stream(filename);
 
-	if(!stream.is_open())
+	if (!stream.is_open())
 	{
 		std::cerr << "File: " << filename << " could not be loaded" << std::endl;
 		return false;
@@ -49,8 +49,8 @@ bool Model::Load(const std::string& filename)
 	std::string line;
 	while (std::getline(stream, line))
 	{
-		if (line.substr(0,2) == "v ") 
-		{  
+		if (line.substr(0, 2) == "v ")
+		{
 			std::istringstream iss{ line.substr(2) };
 			glm::vec3 vertex;
 			iss >> vertex.x;
@@ -59,8 +59,8 @@ bool Model::Load(const std::string& filename)
 
 			vertices.push_back(vertex);
 		}
-		else if (line.substr(0,2) == "f ") 
-		{  
+		else if (line.substr(0, 2) == "f ")
+		{
 			std::istringstream iss{ line.substr(2) };
 			std::string str;
 			while (std::getline(iss, str, ' '))
@@ -87,10 +87,10 @@ bool Model::Load(const std::string& filename)
 				}
 			}
 		}
-		
+
 	}
 
-	stream.close();  
+	stream.close();
 	return true;
 }
 

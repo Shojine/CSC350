@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 
     Camera camera(800, 600);
     camera.SetView(glm::vec3{ 0, 0, -50 }, glm::vec3{ 0 });
-    camera.SetProjection(90.0f,800.0f / 600, 0.01f, 200.0f);
+    camera.SetProjection(90.0f, 800.0f / 600, 0.01f, 200.0f);
     Transform cameraTransform({ 0,0,-20 });
 
     Framebuffer framebuffer(*renderer, 800, 600);
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     imageAlpha.Load("colors.png");
     PostProcess::Alpha(imageAlpha.m_buffer, 85);*/
 
-    
+
 
     std::shared_ptr<Model> model = std::make_shared<Model>();
     model->Load("teapot.obj");
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
         actors.push_back(std::move(actor));
     }
 
-  
+
 
     bool quit = false;
     while (!quit)
@@ -81,46 +81,46 @@ int main(int argc, char* argv[])
                 quit = true;
             }
         }
-      
+
 
         // clear screen
         renderer->RenderClear();
 
-        framebuffer.Clear(color_t{0,0,0,255});
+        framebuffer.Clear(color_t{ 0,0,0,255 });
 
 
         int mx, my;
         SDL_GetMouseState(&mx, &my);
-        
+
 
 
 #pragma region AlphaBlend
-       /* SetBlendMode(BlendMode::Normal);
-        framebuffer.DrawImage(50, 100, image);
-        SetBlendMode(BlendMode::Normal);
-        framebuffer.DrawImage(mx, my, imageAlpha);*/
+        /* SetBlendMode(BlendMode::Normal);
+         framebuffer.DrawImage(50, 100, image);
+         SetBlendMode(BlendMode::Normal);
+         framebuffer.DrawImage(mx, my, imageAlpha);*/
 #pragma endregion
 
-      
-  
+
+
 #pragma region PostProcess
-       //PostProcess::Invert(framebuffer.m_buffer);
-       //PostProcess::Monochrome(framebuffer.m_buffer);
-       //PostProcess::Brightness(framebuffer.m_buffer, 90);
-        //PostProcess::ColorBalance(framebuffer.m_buffer, 150, -50, -50);
-        //PostProcess::Noise(framebuffer.m_buffer, 90);
-        /*for (int i = 0; i < 4; i++)
-        {
-        PostProcess::BoxBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
-        }*/
-       // PostProcess::GauseanBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
-        
-        //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
-        //PostProcess::Monochrome(framebuffer.m_buffer);
-        //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 40);
-       //PostProcess::Threshold(framebuffer.m_buffer,100);
-        //PostProcess::Posterize(framebuffer.m_buffer, 6);
-        //PostProcess::Emboss(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+         //PostProcess::Invert(framebuffer.m_buffer);
+         //PostProcess::Monochrome(framebuffer.m_buffer);
+         //PostProcess::Brightness(framebuffer.m_buffer, 90);
+          //PostProcess::ColorBalance(framebuffer.m_buffer, 150, -50, -50);
+          //PostProcess::Noise(framebuffer.m_buffer, 90);
+          /*for (int i = 0; i < 4; i++)
+          {
+          PostProcess::BoxBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+          }*/
+          // PostProcess::GauseanBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+
+           //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+           //PostProcess::Monochrome(framebuffer.m_buffer);
+           //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 40);
+          //PostProcess::Threshold(framebuffer.m_buffer,100);
+           //PostProcess::Posterize(framebuffer.m_buffer, 6);
+           //PostProcess::Emboss(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
 #pragma endregion
 
         if (input.GetMouseButtonDown(2))
@@ -156,8 +156,8 @@ int main(int argc, char* argv[])
         {
             actor->Draw(framebuffer, camera);
         }
-      
-        
+
+
         framebuffer.Update();
         input.Update();
         //renderer = framebuffer;

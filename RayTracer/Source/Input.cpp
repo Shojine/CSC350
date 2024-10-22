@@ -25,7 +25,7 @@ void Input::Shutdown()
 
 void Input::Update()
 {
-	
+
 	int x, y;
 	uint32_t buttonState = SDL_GetMouseState(&x, &y);
 
@@ -42,7 +42,7 @@ void Input::Update()
 	std::copy(keyboardState, keyboardState + m_keyboardState.size(), m_keyboardState.begin());
 
 	// mouse input
-;
+	;
 
 	// 000 <- button state
 	// 010 <- button mask
@@ -53,8 +53,8 @@ void Input::Update()
 	m_mouseButtonState[1] = buttonState & SDL_BUTTON_MMASK;
 	m_mouseButtonState[2] = buttonState & SDL_BUTTON_RMASK;
 
-	
-	
+
+
 }
 
 void Input::SetRelative(bool relative)

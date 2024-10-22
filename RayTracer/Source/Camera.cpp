@@ -4,7 +4,7 @@
 void Camera::SetView(const glm::vec3& eye, const glm::vec3& center, const glm::vec3& up)
 {
 	m_view = glm::lookAt(eye, center, up);
-	
+
 }
 
 void Camera::SetProjection(float fov, float aspect, float near, float far)
@@ -12,7 +12,7 @@ void Camera::SetProjection(float fov, float aspect, float near, float far)
 	m_projection = glm::perspective(glm::radians(fov), aspect, near, far);
 }
 
-glm::vec4 Camera::ViewToProjection( const glm::vec3& position)
+glm::vec4 Camera::ViewToProjection(const glm::vec3& position)
 {
 	return m_projection * glm::vec4{ position, 1 };
 }
@@ -35,7 +35,7 @@ glm::ivec2 Camera::ToScreen(const glm::vec3& position)
 	return glm::ivec2(x, y);
 }
 
- glm::vec3 Camera::ModelToView(const glm::vec3& position)
+glm::vec3 Camera::ModelToView(const glm::vec3& position)
 {
 	//convert point from world space to view space 
 	return m_view * glm::vec4{ position, 1 };
