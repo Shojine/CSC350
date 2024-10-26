@@ -40,28 +40,38 @@ int main(int argc, char* argv[])
 
     Framebuffer framebuffer(*renderer, 800, 600);
 
-    Transform transform{ {0,0,0}, glm::vec3{0,90,0},glm::vec3{2} };
-    /*Image image;
+    //Transform transform{ {0,0,0}, glm::vec3{0,90,0},glm::vec3{2} };
+    Image image;
     image.Load("Forest.jpg");
 
     Image imageAlpha;
     imageAlpha.Load("colors.png");
-    PostProcess::Alpha(imageAlpha.m_buffer, 85);*/
+    PostProcess::Alpha(imageAlpha.m_buffer, 85);
 
     
 
     std::shared_ptr<Model> model = std::make_shared<Model>();
     model->Load("teapot.obj");
+    std::shared_ptr<Model> barel = std::make_shared<Model>();
+    barel->Load("barel.obj");
+    std::shared_ptr<Model> doughnut = std::make_shared<Model>();
+    barel->Load("box.obj");
+    
     //model->SetColor({ 0, 255, 0, 255 });
 
     std::vector<std::unique_ptr<Actor>> actors;
-    for (int i = 0; i < 5; i++)
-    {
-        Transform transform{ { randomf(-10.0f, 20.0f), randomf(-10.0f, 20.0f), randomf(-10.0f, 20.0f) }, glm::vec3{0, 0, 0}, glm::vec3{ randomf(2, 20) } };
-        std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model);
-        actor->SetColor({ (uint8_t)random(256), (uint8_t)random(256), (uint8_t)random(256), 255 });
-        actors.push_back(std::move(actor));
-    }
+    Transform transform{ { randomf(-10.0f, 100.0f), randomf(-10.0f, 100.0f), randomf(-10.0f, 20.0f) }, glm::vec3{0, 0, 0}, glm::vec3{ randomf(2, 20) } };
+    std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model);
+    std::unique_ptr<Actor> actor1 = std::make_unique<Actor>(transform, barel);
+    std::unique_ptr<Actor> actor2 = std::make_unique<Actor>(transform, doughnut);
+
+    actor->SetColor({ (uint8_t)random(256), (uint8_t)random(256), (uint8_t)random(256), 255 });
+
+    actors.push_back(std::move(actor));
+    actors.push_back(std::move(actor1));
+    actors.push_back(std::move(actor2));
+
+    
 
   
 
@@ -99,6 +109,9 @@ int main(int argc, char* argv[])
         framebuffer.DrawImage(50, 100, image);
         SetBlendMode(BlendMode::Normal);
         framebuffer.DrawImage(mx, my, imageAlpha);*/
+
+        framebuffer.DrawImage(50, 100,image);
+
 #pragma endregion
 
       
