@@ -11,7 +11,7 @@ public:
 		m_center{ center }
 	{
 	}
-	bool Hit(const ray_t& ray) override;
+	bool Hit(const ray_t& ray, raycastHit_t& raycasthit, float minDistance, float maxDistance) override;
 		
 private:
 	glm::vec3 m_center;

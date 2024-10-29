@@ -1,6 +1,7 @@
 #pragma once
  
 #include <glm/glm.hpp>
+//#include <glm/gtx/norm.hpp>
 #include <random>
 
 inline int random() { return rand(); }
@@ -15,4 +16,31 @@ inline glm::vec2 randomOnUnitCircle()
 {
 	float angle = randomf(0, 360);
 	return glm::vec2{ glm::cos(glm::radians(angle)), glm::sin(glm::radians(angle)) };
+}
+
+inline glm::vec3 random(const glm::vec3& v1, const glm::vec3& v2)
+{
+	return glm::vec3{
+		randomf(v1.x,v2.x),
+		randomf(v1.y,v2.y),
+		randomf(v1.z,v2.z)
+	};
+}
+
+
+inline glm::vec3 randomInUnitSphere()
+{
+	glm::vec3 v;
+
+	do
+	{
+		v = random(glm::vec3{ -1 }, glm::vec3{ 1 });
+	} while (glm::length(v) >= 1);
+
+	return v;
+}
+
+inline glm::vec3 randomOnUnitSpere()
+{
+	return glm::normalize(randomInUnitSphere());
 }

@@ -7,7 +7,7 @@ class Tracer
 public:
 	Tracer() = default;
 
-	static color3_t Trace(class Scene& scene, const class ray_t& ray);
+	static color3_t Trace(class Scene& scene, const struct ray_t& ray, float minDistance, float maxDistance,int depth);
 	
 private:
 
