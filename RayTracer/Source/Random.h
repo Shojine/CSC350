@@ -40,7 +40,7 @@ inline glm::vec3 randomInUnitSphere()
 	return v;
 }
 
-inline glm::vec3 randomOnUnitSpere()
+inline glm::vec3 randomOnUnitSphere()
 {
 	return glm::normalize(randomInUnitSphere());
 }

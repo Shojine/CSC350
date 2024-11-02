@@ -18,7 +18,7 @@ bool Plane::Hit(const ray_t& ray, raycastHit_t& raycasthit, float minDistance, f
     raycasthit.distance = t;
     raycasthit.normal = m_normal;
     raycasthit.point = ray.At(t);
-    raycasthit.material = this->m_material;
+    raycasthit.material = GetMaterial();
 
     return true;
     
