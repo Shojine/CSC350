@@ -6,15 +6,13 @@ class Plane : public SceneObject
 {
 public:
 	Plane() = default;
-	Plane(const glm::vec3& center, const glm::vec3& normal, std::shared_ptr<Material> material) :
-		SceneObject{ material },
-		m_center{center},
-		m_normal{normal}
-	{
-	}
+	Plane(const Transform& transform, std::shared_ptr<Material> material) :
+		SceneObject{ transform, material }
+	{}
+	
 
 	bool Hit(const ray_t& ray, raycastHit_t& raycasthit, float minDistance, float maxDistance) override;
-private:
-	glm::vec3 m_center;
-	glm::vec3 m_normal;
+
+	static bool Raycast(const ray_t& ray,const glm::vec3& point, glm::vec3 normal, float minDistance, float maxDistance, float& t);
+
 };

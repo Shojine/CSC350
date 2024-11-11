@@ -2,12 +2,37 @@
 #include "Framebuffer.h"
 #include "Camera.h"
 #include "Triangle.h"
+#include "Sphere.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 
+
+void Model::Update()
+{
+	for (size_t i = 0; i < m_local_vertices.size(); i++)
+	{
+		m_vertices[i] = m_transform * glm::vec4{ m_local_vertices[i], 1 };
+	}
+
+	m_center = glm::vec3{ 0 };
+	for (auto& vertex : m_vertices)
+	{
+		m_center += vertex;
+	}
+	m_center /= (float)m_vertices.size();
+
+	m_radius = 0;
+	for (auto& vertex : m_vertices)
+	{
+		float radius = glm::length(vertex - m_center);
+		m_radius = glm::max(radius, m_radius);//<use glm::max of the radius and m_radius>
+	}
+
+
+}
 
 bool Model::Load(const std::string& filename)
 {
@@ -57,28 +82,41 @@ bool Model::Load(const std::string& filename)
 				if (index[0])
 				{
 					glm::vec3 pos = vertices[index[0] - 1];
-					m_vertices.push_back(pos);
+					m_local_vertices.push_back(pos);
 				}
 			}
 		}
 
 	}
-
+	m_vertices.resize(m_local_vertices.size());
 	stream.close();
 	return true;
 }
 
 bool Model::Hit(const ray_t& ray, raycastHit_t& raycastHit, float minDistance, float maxDistance)
 {
+	float t;
+	//if (!Sphere::Raycast(ray,m_center,m_radius,minDistance,minDistance,t)) return false;
+
+
 	// check cast ray with mesh triangles 
 	for (size_t i = 0; i < m_vertices.size(); i += 3)
 	{	//Create the triangle with the 3 vertex points;
-		Triangle triangle(glm::vec3{ m_vertices[i]}, glm::vec3{ m_vertices[i + 1]}, glm::vec3{ m_vertices[i + 2]}, m_material);
-		if (triangle.Hit(ray, raycastHit, minDistance, maxDistance))
+		
+		if (Triangle::Raycast(ray, m_vertices[i], m_vertices[i + 1], m_vertices[i + 2], minDistance, maxDistance, t))
 		{
+			raycastHit.distance = t;
+			raycastHit.point = ray.At(t);
+
+			glm::vec3 edge1 = m_vertices[i + 1] - m_vertices[i];
+			glm::vec3 edge2 = m_vertices[i + 2] - m_vertices[i];
+
+			raycastHit.normal = glm::normalize(Cross(edge1, edge2));  //<calculate triangle normal, vector perpendicular to edge1 and edge 2, normalize vector>
+			raycastHit.material = GetMaterial();
+
 			return true;
 		}
-		//std::cout << i << " Of: " << m_vertices.size() << std::endl;
+		
 	}
 	return false;
 }
