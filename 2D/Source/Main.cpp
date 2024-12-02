@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Actor.h"
 #include "Random.h"
+#include "Shader.h"
 #include <iostream>
 #include <SDL.h>
 #include <glm/glm.hpp>
@@ -41,35 +42,42 @@ int main(int argc, char* argv[])
     Framebuffer framebuffer(*renderer, 800, 600);
 
     //Transform transform{ {0,0,0}, glm::vec3{0,90,0},glm::vec3{2} };
-    Image image;
+    /*Image image;
     image.Load("Forest.jpg");
 
     Image imageAlpha;
     imageAlpha.Load("colors.png");
-    PostProcess::Alpha(imageAlpha.m_buffer, 85);
+    PostProcess::Alpha(imageAlpha.m_buffer, 85);*/
 
+    //shader 
+    VertexShader::uniforms.view = camera.GetView();
+    VertexShader::uniforms.projection = camera.GetProjection();
+    VertexShader::uniforms.light.position = glm::vec3{ 10, 10, -10 };
+    VertexShader::uniforms.light.direction = glm::vec3{ 0, -1, 0 }; // light pointing down
+    VertexShader::uniforms.light.color = color3_t{ 1 };
+    VertexShader::uniforms.ambient = color3_t{ 0.1f };
     
+    Shader::framebuffer = &framebuffer;
+
+
+
 
     std::shared_ptr<Model> model = std::make_shared<Model>();
-    model->Load("teapot.obj");
-    std::shared_ptr<Model> barel = std::make_shared<Model>();
-    barel->Load("barel.obj");
-    std::shared_ptr<Model> doughnut = std::make_shared<Model>();
-    barel->Load("box.obj");
-    
+    model->Load("Models/sphere.obj");
+    model->SetColor({ 0,1,1,1 });
+   /* std::shared_ptr<Model> barel = std::make_shared<Model>();
+    barel->Load("barel.obj");*/
+   /* std::shared_ptr<Model> box = std::make_shared<Model>();
+    box->Load("Models/box.obj");
+    */
     //model->SetColor({ 0, 255, 0, 255 });
 
     std::vector<std::unique_ptr<Actor>> actors;
-    Transform transform{ { randomf(-10.0f, 100.0f), randomf(-10.0f, 100.0f), randomf(-10.0f, 20.0f) }, glm::vec3{0, 0, 0}, glm::vec3{ randomf(2, 20) } };
+    Transform transform{ glm::vec3{ 0 }, glm::vec3{ 0 }, glm::vec3{ 2 } };
     std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model);
-    std::unique_ptr<Actor> actor1 = std::make_unique<Actor>(transform, barel);
-    std::unique_ptr<Actor> actor2 = std::make_unique<Actor>(transform, doughnut);
-
-    actor->SetColor({ (uint8_t)random(256), (uint8_t)random(256), (uint8_t)random(256), 255 });
-
     actors.push_back(std::move(actor));
-    actors.push_back(std::move(actor1));
-    actors.push_back(std::move(actor2));
+    //actors.push_back(std::move(actor1));
+    //actors.push_back(std::move(actor2));
 
     
 
@@ -110,7 +118,7 @@ int main(int argc, char* argv[])
         SetBlendMode(BlendMode::Normal);
         framebuffer.DrawImage(mx, my, imageAlpha);*/
 
-        framebuffer.DrawImage(50, 100,image);
+        //framebuffer.DrawImage(50, 100,image);
 
 #pragma endregion
 
@@ -161,13 +169,15 @@ int main(int argc, char* argv[])
             input.SetRelative(false);
         }
         camera.SetView(cameraTransform.position, cameraTransform.position + cameraTransform.GetForward());
+        VertexShader::uniforms.view = camera.GetView();
 
         //transform.position += direction * 70.0f * time.GetDeltaTime();
         //transform.rotation.z += 90* time.GetDeltaTime();
        // model->Draw(framebuffer, transform.GetMatrix(),camera);
         for (auto& actor : actors)
         {
-            actor->Draw(framebuffer, camera);
+            //actor->GetTransform().rotation.y += time.GetDeltaTime() * 90;
+            actor->Draw();
         }
       
         

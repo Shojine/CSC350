@@ -72,9 +72,7 @@ void InitScene01(Scene& scene, Camera& camera)
     camera.SetView({ 13, 2, 3 }, { 0, 0, 0 });
 
     auto ground_material = std::make_shared<Lambertian>(color3_t(0.5f));
-    auto plane = std::make_unique<Plane>(Transform{ glm::vec3{0,-2,0}, glm::vec3{0,0,0} }, ground_material);
-    scene.AddObject(std::move(plane));
-
+    scene.AddObject(std::make_unique<Plane>(Transform{ glm::vec3{ 0,-2,0 } }, ground_material));
 
     for (int a = -11; a < 11; a++) {
         for (int b = -11; b < 11; b++) {
@@ -106,10 +104,6 @@ void InitScene01(Scene& scene, Camera& camera)
         }
     }
 
-
-
-
-
     auto material1 = std::make_shared<Dielectric>(color3_t{ 1 }, 1.5f);
     scene.AddObject(std::make_unique<Sphere>(Transform{ glm::vec3{ 0, 1, 0 } }, 1.0f, material1));
 
@@ -121,9 +115,10 @@ void InitScene01(Scene& scene, Camera& camera)
 }
 
 
+
 void initScene(Scene& scene)
 {
-    //scene.SetSky(HSVtoRGB(240, 1, 0.01),HSVtoRGB(250,5,0.001));
+    scene.SetSky(HSVtoRGB(240, 1, 0.01),HSVtoRGB(250,5,0.001));
     std::vector<std::shared_ptr<Material>> colors;
     std::shared_ptr<Material> gray = std::make_shared<Lambertian>(color3_t{ 0.5f });
     std::shared_ptr<Material> red = std::make_shared<Lambertian>(color3_t{ 1, 0, 0 });
@@ -163,11 +158,11 @@ void initScene(Scene& scene)
     barel->Load("Models/cube.obj");
     scene.AddObject(std::move(barel));
 
-    /*for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
     auto object = std::make_unique<Sphere>(Transform{ glm::vec3{ random(glm::vec3{0}, glm::vec3{10})} }, 2.0f, colors[random(colors.size())]);
     scene.AddObject(std::move(object));
-    }*/
+    }
 
 
    // auto triangle = std::make_unique<Triangle>(glm::vec3{ -2, 0, 0 }, glm::vec3{ 0, 2, 0 }, glm::vec3{ 2, 0, 0 }, green); scene.AddObject(std::move(triangle));
@@ -207,7 +202,7 @@ int main(int argc, char* argv[])
     scene.Update();
    
     framebuffer.Clear(ColorConvert(color4_t{ 0,0.25f,0,1.0f}));
-    scene.Render(framebuffer, camera, 80,6);
+    scene.Render(framebuffer, camera, 1,6);
 
 
     bool quit = false;

@@ -1,19 +1,17 @@
 #include "Plane.h"
 #include "MathUtils.h"
 
-bool Plane::Hit(const ray_t& ray, raycastHit_t& raycasthit, float minDistance, float maxDistance)
+bool Plane::Hit(const ray_t& ray, raycastHit_t& raycastHit, float minDistance, float maxDistance)
 {
     float t;
-
     if (!Raycast(ray, m_transform.position, m_transform.GetUp(), minDistance, maxDistance, t)) return false;
 
-    raycasthit.distance = t;
-    raycasthit.normal = glm::normalize(raycasthit.point - m_transform.position);
-    raycasthit.point = ray.At(t);
-    raycasthit.material = GetMaterial();
+    raycastHit.distance = t;
+    raycastHit.normal = glm::normalize(m_transform.GetUp());
+    raycastHit.point = ray.At(t);
+    raycastHit.material = GetMaterial();
 
     return true;
-    
 }
 
 bool Plane::Raycast(const ray_t& ray, const glm::vec3& point, const glm::vec3 normal, float minDistance, float maxDistance, float& t)

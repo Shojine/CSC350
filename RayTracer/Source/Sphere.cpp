@@ -1,18 +1,17 @@
 #include "Sphere.h"
 #include "Ray.h"
 
-bool Sphere::Hit(const ray_t& ray, raycastHit_t& raycasthit, float minDistance, float maxDistance)
+bool Sphere::Hit(const ray_t& ray, raycastHit_t& raycastHit, float minDistance, float maxDistance)
 {
     float t;
     if (!Raycast(ray, m_transform.position, m_radius * m_transform.scale.x, minDistance, maxDistance, t)) return false;
 
-    raycasthit.distance = t;
-    raycasthit.point = ray.At(t);
-    raycasthit.normal = glm::normalize(raycasthit.point - m_transform.position);
-    raycasthit.material = GetMaterial();
+    raycastHit.distance = t;
+    raycastHit.point = ray.At(t);
+    raycastHit.normal = glm::normalize(raycastHit.point - m_transform.position);
+    raycastHit.material = GetMaterial();
 
     return true;
-
 }
 
 bool Sphere::Raycast(const ray_t& ray, const glm::vec3& center, float radius, float minDistance, float maxDistance, float& t)
@@ -42,14 +41,12 @@ bool Sphere::Raycast(const ray_t& ray, const glm::vec3& center, float radius, fl
         t = (-b - sqrt(discriminant)) / (2 * a);
         if (t >= minDistance && t <= maxDistance)
         {
-            
             return true;
         }
 
         t = (-b + sqrt(discriminant)) / (2 * a);
         if (t >= minDistance && t <= maxDistance)
         {
-            
             return true;
         }
     }
