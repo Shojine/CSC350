@@ -31,6 +31,8 @@ public:
 
 	void DrawImage(int x, int y, const class Image& image);
 
+	std::vector<float>& GetDepth() {return m_depth;}
+
 	std::vector<color_t>& GetBuffer() { return m_buffer; }
 
 
@@ -40,6 +42,7 @@ public:
 	int m_height{ 0 };
 	int m_pitch{ 0 };
 
+
 	const int INSIDE = 0; // 0000
 	const int LEFT = 1; // 0001
 	const int RIGHT = 2; // 0010
@@ -48,4 +51,5 @@ public:
 
 	SDL_Texture* m_texture{ nullptr };
 	std::vector<color_t> m_buffer;
+	std::vector<float> m_depth;
 };

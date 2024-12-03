@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
 
     std::shared_ptr<Model> model = std::make_shared<Model>();
-    model->Load("Models/sphere.obj");
+    model->Load("Models/ogre.obj");
     model->SetColor({ 0,1,1,1 });
    /* std::shared_ptr<Model> barel = std::make_shared<Model>();
     barel->Load("barel.obj");*/
@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
        // model->Draw(framebuffer, transform.GetMatrix(),camera);
         for (auto& actor : actors)
         {
-            //actor->GetTransform().rotation.y += time.GetDeltaTime() * 90;
+            actor->GetTransform().rotation.y += time.GetDeltaTime() * 90;
             actor->Draw();
         }
       
