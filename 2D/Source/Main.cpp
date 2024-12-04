@@ -50,12 +50,12 @@ int main(int argc, char* argv[])
     PostProcess::Alpha(imageAlpha.m_buffer, 85);*/
 
     //shader 
-    VertexShader::uniforms.view = camera.GetView();
-    VertexShader::uniforms.projection = camera.GetProjection();
-    VertexShader::uniforms.light.position = glm::vec3{ 10, 10, -10 };
-    VertexShader::uniforms.light.direction = glm::vec3{ 0, -1, 0 }; // light pointing down
-    VertexShader::uniforms.light.color = color3_t{ 1 };
-    VertexShader::uniforms.ambient = color3_t{ 0.1f };
+    Shader::uniforms.view = camera.GetView();
+    Shader::uniforms.projection = camera.GetProjection();
+    Shader::uniforms.light.position = glm::vec3{ 10, 10, -10 };
+    Shader::uniforms.light.direction = glm::vec3{ 0, -1, 0 }; // light pointing down
+    Shader::uniforms.light.color = color3_t{ 1 };
+    Shader::uniforms.ambient = color3_t{ 0.1f };
     
     Shader::framebuffer = &framebuffer;
 
@@ -72,12 +72,26 @@ int main(int argc, char* argv[])
     */
     //model->SetColor({ 0, 255, 0, 255 });
 
+
+
     std::vector<std::unique_ptr<Actor>> actors;
     Transform transform{ glm::vec3{ 0 }, glm::vec3{ 0 }, glm::vec3{ 2 } };
     std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model);
     actors.push_back(std::move(actor));
     //actors.push_back(std::move(actor1));
     //actors.push_back(std::move(actor2));
+
+    /*{
+        Transform transform{ glm::vec3{5,0,0},glm::vec3{0}, glm::vec3{1} };
+        std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model, red);
+        actors.push_back(std::move(actor));
+    }
+
+    {
+        Transform transform{ glm::vec3{-5,0,0},glm::vec3{0}, glm::vec3{1} };
+        std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model, blue);
+        actors.push_back(std::move(actor));
+    }*/
 
     
 
@@ -162,14 +176,14 @@ int main(int argc, char* argv[])
 
             glm::vec3 offset = cameraTransform.GetMatrix() * glm::vec4{ direction, 0 };
 
-            cameraTransform.position += offset * 70.0f * time.GetDeltaTime();
+            cameraTransform.position += offset * 20.0f * time.GetDeltaTime();
         }
         else
         {
             input.SetRelative(false);
         }
         camera.SetView(cameraTransform.position, cameraTransform.position + cameraTransform.GetForward());
-        VertexShader::uniforms.view = camera.GetView();
+        Shader::uniforms.view = camera.GetView();
 
         //transform.position += direction * 70.0f * time.GetDeltaTime();
         //transform.rotation.z += 90* time.GetDeltaTime();
