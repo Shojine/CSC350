@@ -17,11 +17,28 @@ color4_t FragmentShader::Process(const fragment_input_t& fragment)
     glm::vec3 light_dir = glm::normalize(light_direction);
 
 
-    float intensity = std::max(0.0f, glm::dot(-light_dir, fragment.normal));
-    color3_t diffuse = Shader::uniforms.light.color * intensity;
-    color3_t color = Shader::uniforms.ambient + diffuse;
 
-	return color4_t{fragment.normal, 1};
+
+
+    float intensity = std::max(0.0f, glm::dot(-light_dir, fragment.normal));
+
+
+    color3_t diffuse = Shader::uniforms.light.color * intensity;
+    color3_t specular = color3_t(0.0f);
+
+    if (intensity > 0.0f)
+    {
+        glm::vec3 reflection = glm::reflect(light_direction, fragment.normal);
+        glm::vec3 view_direction = glm::normalize(-fragment.position);
+
+        float spec_intensity = std::max(glm::dot(reflection, view_direction), 0.0f);
+        spec_intensity = std::pow(spec_intensity, Shader::uniforms.material.shininess); // Apply shininess factor
+
+        specular = Shader::uniforms.material.specular * Shader::uniforms.light.color * spec_intensity;
+    }
+    color3_t color = ((Shader::uniforms.ambient + diffuse) * Shader::uniforms.material.albedo) + specular;
+
+	return color4_t{color, 1};//color
 }
 
 

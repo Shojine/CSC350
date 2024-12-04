@@ -75,23 +75,36 @@ int main(int argc, char* argv[])
 
 
     std::vector<std::unique_ptr<Actor>> actors;
-    Transform transform{ glm::vec3{ 0 }, glm::vec3{ 0 }, glm::vec3{ 2 } };
+    /*Transform transform{ glm::vec3{ 0 }, glm::vec3{ 0 }, glm::vec3{ 2 } };
     std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model);
-    actors.push_back(std::move(actor));
+    actors.push_back(std::move(actor));*/
     //actors.push_back(std::move(actor1));
     //actors.push_back(std::move(actor2));
 
-    /*{
-        Transform transform{ glm::vec3{5,0,0},glm::vec3{0}, glm::vec3{1} };
+
+    std::shared_ptr<material_t> blue = std::make_shared<material_t>();
+    blue->albedo = color3_t{ 0, 0, 1 };
+    blue->specular = color3_t{ 1 };
+    blue->shininess = 20.0f;
+
+    std::shared_ptr<material_t> red = std::make_shared<material_t>();
+    red->albedo = color3_t{ 1, 0, 0 };
+    red->specular = color3_t{ 100 };
+    red->shininess = 200.0f;
+
+
+
+    {
+        Transform transform{ glm::vec3{5,0,0},glm::vec3{0}, glm::vec3{5} };
         std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model, red);
         actors.push_back(std::move(actor));
     }
 
     {
-        Transform transform{ glm::vec3{-5,0,0},glm::vec3{0}, glm::vec3{1} };
+        Transform transform{ glm::vec3{-5,0,0},glm::vec3{0}, glm::vec3{5} };
         std::unique_ptr<Actor> actor = std::make_unique<Actor>(transform, model, blue);
         actors.push_back(std::move(actor));
-    }*/
+    }
 
     
 
