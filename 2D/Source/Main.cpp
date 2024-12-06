@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     Shader::uniforms.view = camera.GetView();
     Shader::uniforms.projection = camera.GetProjection();
     Shader::uniforms.light.position = glm::vec3{ 10, 10, -10 };
-    Shader::uniforms.light.direction = glm::vec3{ 0, -1, 0 }; // light pointing down
+    Shader::uniforms.light.direction = glm::vec3{ 0, 0, -1 }; // light pointing down
     Shader::uniforms.light.color = color3_t{ 1 };
     Shader::uniforms.ambient = color3_t{ 0.1f };
     
@@ -63,8 +63,8 @@ int main(int argc, char* argv[])
 
 
     std::shared_ptr<Model> model = std::make_shared<Model>();
-    model->Load("Models/ogre.obj");
-    model->SetColor({ 0,1,1,1 });
+    model->Load("Models/cube.obj");
+   // model->SetColor({ 0,1,1,1 });
    /* std::shared_ptr<Model> barel = std::make_shared<Model>();
     barel->Load("barel.obj");*/
    /* std::shared_ptr<Model> box = std::make_shared<Model>();
@@ -85,12 +85,12 @@ int main(int argc, char* argv[])
     std::shared_ptr<material_t> blue = std::make_shared<material_t>();
     blue->albedo = color3_t{ 0, 0, 1 };
     blue->specular = color3_t{ 1 };
-    blue->shininess = 20.0f;
+    blue->shininess = 128.0f;
 
     std::shared_ptr<material_t> red = std::make_shared<material_t>();
     red->albedo = color3_t{ 1, 0, 0 };
-    red->specular = color3_t{ 100 };
-    red->shininess = 200.0f;
+    red->specular = color3_t{ 1 };
+    red->shininess = 16.0f;
 
 
 
@@ -203,7 +203,7 @@ int main(int argc, char* argv[])
        // model->Draw(framebuffer, transform.GetMatrix(),camera);
         for (auto& actor : actors)
         {
-            actor->GetTransform().rotation.y += time.GetDeltaTime() * 90;
+            actor->GetTransform().rotation.y += time.GetDeltaTime() * 40;
             actor->Draw();
         }
       
